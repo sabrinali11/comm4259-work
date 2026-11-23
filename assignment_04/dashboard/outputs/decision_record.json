@@ -1,0 +1,44 @@
+{
+  "analysis_id": "20261122-212600",
+  "saved_at": "2026-11-22 21:44:40",
+  "data_file": "WineQuality.csv",
+  "rows_in_file": 2700,
+  "target": "quality",
+  "positive_class": "Good",
+  "preparation_choices": {
+    "drop_dups": true,
+    "missing_rule": "Drop rows with missing values",
+    "outlier_rule": "Keep outliers",
+    "drop_cols": []
+  },
+  "preparation_steps_applied": {
+    "Duplicate rows": "removed 527",
+    "Missing values": "none found, no action needed",
+    "Outliers": "kept",
+    "Dropped columns": "none",
+    "Target": "Good = 1, everything else = 0"
+  },
+  "prepared_rows": 2173,
+  "input_columns": 11,
+  "testing_share": 0.3,
+  "random_state": 1,
+  "testing_rows": 652,
+  "cost_matrix": {
+    "TN": 0.0,
+    "FP": 20.0,
+    "FN": 0.0,
+    "TP": -12.0
+  },
+  "expected_cost_by_option": {
+    "Run 3: Random forest ({'n_estimators': 200, 'max_depth': 10})": -1572.0,
+    "Run 2: Logistic regression ({'C': 1.0})": -1296.0,
+    "Run 4: K-nearest neighbor (GridSearchCV best: {'n_neighbors': 7})": -1216.0,
+    "Run 1: Decision tree ({'max_depth': 5, 'min_samples_leaf': 1})": -984.0,
+    "Baseline: predict negative for everyone": 0.0,
+    "Baseline: predict positive for everyone": 5104.0
+  },
+  "lowest_cost_option": "Run 3: Random forest ({'n_estimators': 200, 'max_depth': 10})",
+  "recommended_run": "Run 3: Random forest ({'n_estimators': 200, 'max_depth': 10})",
+  "recommendation": "I'd go with the random forest (Run 3, 200 trees, max_depth 10). It had the lowest expected cost of the runs I trained and also the best accuracy (0.860). The main reason it wins is that it only stocked 39 poor wines, fewer than any other model, and it still caught about 79% of the good ones. On the 652 test wines it came out to -$1,572, so roughly $2.41 saved per wine.\n\nFor comparison, stocking every wine would cost $5,104 (about $7.83 per wine), since losing $20 on each of the 404 poor wines is worse than making $12 on the 248 good ones. Stocking nothing just gives $0. So the random forest does about $6,676 better than stocking everything and $1,572 better than stocking nothing.\n\nA possible limitation is that this is all based on one 30% test split and the shop's assumed $12 profit / $20 loss. It also counts the 52 good wines it rejected as costing nothing, which isn't really true if the shop misses out on sales. With different wines or different amounts, the savings could look different.",
+  "model_runs_file": "model_runs.csv"
+}
